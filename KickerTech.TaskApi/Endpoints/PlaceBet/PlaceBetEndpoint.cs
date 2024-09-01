@@ -51,11 +51,11 @@ namespace KickerTech.TaskApi.Endpoints.PlaceBet
         {
             if (player.Balance < request.BetSum)
             {
-                AddError(r => r.PlayerId, "Not enough balance for this bet!");
+                AddError(r => r.BetSum, "Not enough balance for this bet!");
             }
             if(request.BetSum <= 0)
             {
-                AddError(r => r.PlayerId, "Bet value must be over 0");
+                AddError(r => r.BetSum, "Bet value must be over 0");
             }
 
             //here should be valid odds validation that i do not understand.
@@ -79,11 +79,11 @@ namespace KickerTech.TaskApi.Endpoints.PlaceBet
             }
             if (eventObj == null)
             {
-                AddError(r => r.PlayerId, "Event is not found!");
+                AddError(r => r.EventId, "Event is not found!");
             }
             if (odds == null)
             {
-                AddError(r => r.PlayerId, "Event odd is not found!");
+                AddError(r => r.OddId, "Event odd is not found!");
             }
             ThrowIfAnyErrors(); // throws error is request is not valid
 
