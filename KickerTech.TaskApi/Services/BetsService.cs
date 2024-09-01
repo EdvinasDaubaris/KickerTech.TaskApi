@@ -12,7 +12,6 @@ namespace KickerTech.TaskApi.Services
     public class BetsService : IBetsService
     {
         private readonly string _filePath;
-
         public BetsService()
         {
             _filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Bets.json"); ;
@@ -25,19 +24,17 @@ namespace KickerTech.TaskApi.Services
 
             return bets ?? new List<Bet>();
         }
-
         public void CreateBet(int playerId, int eventId, int oddId, decimal betSum, ResultCode resultCode)
         {
             var bets = GetBets();
 
-            
             var newBet = new Bet
             {
                 Id = bets.Any() ? bets.Max(b => b.Id) + 1 : 1, // Auto-increment the Id
                 EventId = eventId,
                 PlayerId = playerId,
                 OddId = oddId,
-                ResultCode = resultCode, 
+                ResultCode = resultCode,
                 BetSum = betSum
             };
 

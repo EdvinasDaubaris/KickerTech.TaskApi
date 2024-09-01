@@ -28,8 +28,7 @@ namespace KickerTech.TaskApi.Endpoints.GetBets
                 EventId = s.EventId,
                 OddId = s.OddId,
                 ResultCode = s.ResultCode.ToString()
-            }).ToList(); 
-
+            }).ToList();
         }
     }
 }

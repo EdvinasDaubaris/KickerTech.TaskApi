@@ -20,7 +20,6 @@ namespace KickerTech.TaskApi.Services
         public List<Player> GetPlayers()
         {
             var jsonString = File.ReadAllText(_filePath);
-
             var players = JsonSerializer.Deserialize<List<Player>>(jsonString);
 
             return players ?? new List<Player>();

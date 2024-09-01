@@ -10,6 +10,5 @@ namespace KickerTech.TaskApi.Endpoints.PlaceBet
         public int EventId { get; set; }
         public int OddId { get; set; }
         public string ResultCode { get; set; }
-
     }
 }

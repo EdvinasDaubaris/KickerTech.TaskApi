@@ -53,7 +53,7 @@ namespace KickerTech.TaskApi.Endpoints.PlaceBet
             {
                 AddError(r => r.BetSum, "Not enough balance for this bet!");
             }
-            if(request.BetSum <= 0)
+            if (request.BetSum <= 0)
             {
                 AddError(r => r.BetSum, "Bet value must be over 0");
             }
@@ -86,7 +86,6 @@ namespace KickerTech.TaskApi.Endpoints.PlaceBet
                 AddError(r => r.OddId, "Event odd is not found!");
             }
             ThrowIfAnyErrors(); // throws error is request is not valid
-
         }
     }
 }
