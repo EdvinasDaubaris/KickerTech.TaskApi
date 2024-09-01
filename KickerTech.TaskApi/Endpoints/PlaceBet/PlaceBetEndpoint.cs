@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace KickerTech.TaskApi.Endpoints.PlaceBet
 {
-    public class PlaceBetEndpoint : Endpoint<PlaceBetRequest>
+    public class PlaceBetEndpoint : Endpoint<PlaceBetRequest, PlaceBetResponse>
     {
         private readonly IEventsService _eventsService;
         private readonly IPlayersService _playersService;
@@ -40,6 +40,11 @@ namespace KickerTech.TaskApi.Endpoints.PlaceBet
 
             _betsService.CreateBet(player.Id, eventObj.Id, odds.Id, request.BetSum, ResultCode.Success);
             _playersService.UpdatePlayerBalance(player.Id, player.Balance - request.BetSum);
+
+            Response = new PlaceBetResponse
+            {
+                ResultCode = ResultCode.Success.ToString()
+            };
         }
 
         private void ValidateBet(Event? eventObj, Player? player, Odd? odds, PlaceBetRequest request)
