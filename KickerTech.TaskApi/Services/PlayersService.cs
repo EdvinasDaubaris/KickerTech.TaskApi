@@ -3,7 +3,13 @@ using System.Text.Json;
 
 namespace KickerTech.TaskApi.Services
 {
-    public class PlayersService
+    public interface IPlayersService
+    {
+        List<Player> GetPlayers();
+        void UpdatePlayerBalance(int playerId, decimal newBalance);
+    }
+
+    public class PlayersService : IPlayersService
     {
         private readonly string _filePath;
 
@@ -19,6 +25,16 @@ namespace KickerTech.TaskApi.Services
             var players = JsonSerializer.Deserialize<List<Player>>(jsonString);
 
             return players ?? new List<Player>();
+        }
+
+        public void UpdatePlayerBalance(int playerId, decimal newBalance)
+        {
+            var players = GetPlayers();
+            var player = players.FirstOrDefault(p => p.Id == playerId);
+            player.Balance = newBalance;
+
+            var jsonString = JsonSerializer.Serialize(players, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(_filePath, jsonString);
         }
     }
 }

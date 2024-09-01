@@ -1,11 +1,11 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using KickerTech.TaskApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
 
 builder.Services.AddAuthorization().AddFastEndpoints().SwaggerDocument(o =>
 {
@@ -15,6 +15,10 @@ builder.Services.AddAuthorization().AddFastEndpoints().SwaggerDocument(o =>
         s.Version = "v1";
     };
 });
+
+builder.Services.AddScoped<IEventsService, EventsService>();
+builder.Services.AddScoped<IBetsService, BetsService>();
+builder.Services.AddScoped<IPlayersService, PlayersService>();
 
 var app = builder.Build();
 

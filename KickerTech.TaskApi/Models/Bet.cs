@@ -5,6 +5,8 @@
         public int Id { get; set; }
         public int EventId { get; set; }
         public int OddId { get; set; }
+        public int PlayerId { get; set; }
+        public decimal BetSum { get; set; }
         public ResultCode ResultCode { get; set; }
     }
 
