@@ -1,6 +1,6 @@
 @KickerTech.TaskApi_HostAddress = http://localhost:5058
 
-GET {{KickerTech.TaskApi_HostAddress}}/weatherforecast/
+GET {{KickerTech.TaskApi_HostAddress}}/swager/
 Accept: application/json
 
 ###
