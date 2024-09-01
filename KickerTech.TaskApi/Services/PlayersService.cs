@@ -12,10 +12,9 @@ namespace KickerTech.TaskApi.Services
     public class PlayersService : IPlayersService
     {
         private readonly string _filePath;
-
         public PlayersService()
         {
-            _filePath = "/Data/Players.json";
+            _filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Players.json");
         }
 
         public List<Player> GetPlayers()

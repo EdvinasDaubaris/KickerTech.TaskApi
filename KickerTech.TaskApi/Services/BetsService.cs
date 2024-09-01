@@ -15,7 +15,7 @@ namespace KickerTech.TaskApi.Services
 
         public BetsService()
         {
-            _filePath = "/Data/Bets.json";
+            _filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Bets.json"); ;
         }
 
         public List<Bet> GetBets()

@@ -15,7 +15,7 @@ namespace KickerTech.TaskApi.Services
 
         public EventsService()
         {
-            _filePath = "/Data/Events.json";
+            _filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "Events.json");
         }
 
         public List<Event> GetEvents()
