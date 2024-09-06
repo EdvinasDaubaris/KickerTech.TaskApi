@@ -59,6 +59,10 @@ namespace KickerTech.TaskApi.Endpoints.PlaceBet
             {
                 AddError(r => r.BetSum, "Bet value must be over 0");
             }
+            if(request.OddValue <= 0)
+            {
+                AddError(r => r.OddValue, "Odd value must be not zero");
+            }
 
             var oddTolerancePercentage = _oddsService.GetOddTolerancePercentage(odds.Value, request.OddValue);
 
