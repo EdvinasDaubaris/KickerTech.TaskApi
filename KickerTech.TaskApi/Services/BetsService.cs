@@ -6,7 +6,7 @@ namespace KickerTech.TaskApi.Services
     public interface IBetsService
     {
         List<Bet> GetBets();
-        void CreateBet(int playerId, int eventId, int oddId, decimal betSum, ResultCode resultCode);
+        void CreateBet(int playerId, int eventId, int oddId,decimal oddValue, decimal betSum, ResultCode resultCode);
     }
 
     public class BetsService : IBetsService
@@ -24,7 +24,7 @@ namespace KickerTech.TaskApi.Services
 
             return bets ?? new List<Bet>();
         }
-        public void CreateBet(int playerId, int eventId, int oddId, decimal betSum, ResultCode resultCode)
+        public void CreateBet(int playerId, int eventId, int oddId, decimal oddValue, decimal betSum, ResultCode resultCode)
         {
             var bets = GetBets();
 
@@ -35,7 +35,8 @@ namespace KickerTech.TaskApi.Services
                 PlayerId = playerId,
                 OddId = oddId,
                 ResultCode = resultCode,
-                BetSum = betSum
+                BetSum = betSum,
+                OddValue = oddValue
             };
 
             bets.Add(newBet);

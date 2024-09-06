@@ -19,6 +19,7 @@ builder.Services.AddAuthorization().AddFastEndpoints().SwaggerDocument(o =>
 builder.Services.AddScoped<IEventsService, EventsService>();
 builder.Services.AddScoped<IBetsService, BetsService>();
 builder.Services.AddScoped<IPlayersService, PlayersService>();
+builder.Services.AddScoped<IOddsService, OddsService>();
 
 var app = builder.Build();
 

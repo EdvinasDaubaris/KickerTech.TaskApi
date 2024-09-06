@@ -11,13 +11,15 @@ namespace KickerTech.TaskApi.Endpoints.PlaceBet
         private readonly IEventsService _eventsService;
         private readonly IPlayersService _playersService;
         private readonly IBetsService _betsService;
+        private readonly IOddsService _oddsService;
 
 
-        public PlaceBetEndpoint(IEventsService eventsService, IPlayersService playersService, IBetsService betsService)
+        public PlaceBetEndpoint(IEventsService eventsService, IPlayersService playersService, IBetsService betsService, IOddsService oddsService)
         {
             _eventsService = eventsService;
             _playersService = playersService;
             _betsService = betsService;
+            _oddsService = oddsService;
         }
 
         public override void Configure()
@@ -38,7 +40,7 @@ namespace KickerTech.TaskApi.Endpoints.PlaceBet
             // validate if bet match criteria
             ValidateBet(eventObj, player, odds, request);
 
-            _betsService.CreateBet(player.Id, eventObj.Id, odds.Id, request.BetSum, ResultCode.Success);
+            _betsService.CreateBet(player.Id, eventObj.Id, odds.Id,request.OddValue, request.BetSum, ResultCode.Success);
             _playersService.UpdatePlayerBalance(player.Id, player.Balance - request.BetSum);
 
             Response = new PlaceBetResponse
@@ -58,19 +60,26 @@ namespace KickerTech.TaskApi.Endpoints.PlaceBet
                 AddError(r => r.BetSum, "Bet value must be over 0");
             }
 
-            //here should be valid odds validation that i do not understand.
-            //var OddsPercentage = _eventsService.CalculateOddPercentage(eventObj, odds.Id);
-            //if (OddsPercentage && eventObj.IsLive)
-            //{
+            var oddTolerancePercentage = _oddsService.GetOddTolerancePercentage(odds.Value, request.OddValue);
 
-            //}
+            if (eventObj.IsLive && oddTolerancePercentage > 10)
+            {
+                AddError(r => r.OddValue, "Odd tolerance is out of accepted bounds.");
+            }
+            else if(!eventObj.IsLive && oddTolerancePercentage > 5)
+            {
+                AddError(r => r.OddValue, "Odd tolerance is out of accepted bounds.");
+            }
+
             if (ValidationFailed)
             {
-                _betsService.CreateBet(player.Id, eventObj.Id, odds.Id, request.BetSum, ResultCode.Failed);
+                _betsService.CreateBet(player.Id, eventObj.Id, odds.Id, request.OddValue, request.BetSum, ResultCode.Failed);
             }
 
             ThrowIfAnyErrors();
         }
+
+
         private void ValidateRequest(Event? eventObj, Player? player, Odd? odds)
         {
             if (player == null)
